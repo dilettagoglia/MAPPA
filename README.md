@@ -18,25 +18,6 @@ transform it in structured cards for each plant in the database, both in Word an
 The database in .xlsx format and the code contained in this repo have been developed for the 
 MAPPA project (Medicinal and Aromatic Plant Procedures for Authentication) of Pharmacy Department, University of Pisa.
 
-### Corresponding author
-**Dr. Diletta Goglia** <a href="https://orcid.org/0000-0002-2622-7495"><img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a> <br/>
-**Postgraduate Student in MSc in Artificial Intelligence** <br/>
-**Computer Science department, University of Pisa, Italy** <br/>
-[d.goglia@studenti.unipi.it](mailto:d.goglia@studenti.unipi.it) <br/>
-[dilettagoglia.netlify.app](http://www.dilettagoglia.netlify.app) 
-
-_Candidata vincitrice dell'incarico di collaborazione a seguito del [bando dedicato 
-all'attività di supporto all’interno del progetto MAPPA](https://www.farm.unipi.it/wp-content/uploads/2022/04/PD-253-prot-1986-del-12-04-2022-Bando-PSd-Bertoli_150-ore.pdf) per lo sviluppo di una banca 
-dati di settore on-line dedicata all’inquadramento di materie prime e derivati 
-a base di piante officinali mediante catalogazione di dati etno-botanico-farmaceutici selezionati_
-
-
-### Project info
-**Coordinator**: Alessandra Bertoli, associated professor at Pharmacy Department, University of Pisa
-via Bonanno 33 56126 PISA (Italy), [alessandra.bertoli@unipi.it](alessandra.bertoli@unipi.it)
-
-
-
 ## Directory structure (main elements)
 ```
 MAPPA
@@ -79,3 +60,19 @@ cd src/
 python main.py
 ```
 
+## Corresponding author
+**Dr. Diletta Goglia** <a href="https://orcid.org/0000-0002-2622-7495"><img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a> <br/>
+**Postgraduate Student in MSc in Artificial Intelligence** <br/>
+**Computer Science department, University of Pisa, Italy** <br/>
+[d.goglia@studenti.unipi.it](mailto:d.goglia@studenti.unipi.it) <br/>
+[dilettagoglia.netlify.app](http://www.dilettagoglia.netlify.app) 
+
+_Candidata vincitrice dell'incarico di collaborazione a seguito del [bando dedicato 
+all'attività di supporto all’interno del progetto MAPPA](https://www.farm.unipi.it/wp-content/uploads/2022/04/PD-253-prot-1986-del-12-04-2022-Bando-PSd-Bertoli_150-ore.pdf) per lo sviluppo di una banca 
+dati di settore on-line dedicata all’inquadramento di materie prime e derivati 
+a base di piante officinali mediante catalogazione di dati etno-botanico-farmaceutici selezionati_
+
+
+## Project info
+**Coordinator**: Alessandra Bertoli, associated professor at Pharmacy Department, University of Pisa
+via Bonanno 33 56126 PISA (Italy), [alessandra.bertoli@unipi.it](alessandra.bertoli@unipi.it)
