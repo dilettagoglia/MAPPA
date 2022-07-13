@@ -75,6 +75,12 @@ dati di settore on-line dedicata all’inquadramento di materie prime e derivati
 a base di piante officinali mediante catalogazione di dati etno-botanico-farmaceutici selezionati_
 
 
-## Project info
-**Coordinator**: Alessandra Bertoli, associated professor at Pharmacy Department, University of Pisa,
+## Project info & team
+#### Coordinator 
+Alessandra Bertoli, <br/>
+Associated professor at [Pharmacy Department](https://www.farm.unipi.it/), University of Pisa,<br/>
 via Bonanno 33 56126 PISA (Italy), [alessandra.bertoli@unipi.it](mailto:alessandra.bertoli@unipi.it)
+
+#### Data gathering
+Alice Bovi Campeggi, Elisa De Santis, Elisa Solari (Pharmacy Department), Alice Downes (Agricultural Science Department)
+
