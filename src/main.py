@@ -124,7 +124,8 @@ def make_plant_card():
 
         table_temp = table[table.ID_pianta == id]
         plant_name = table_temp['nome_scientifico']
-        plant_title = f'{str(table_temp.ID_pianta.values)}: {str(plant_name.values)}'
+        # plant_title = f'{table_temp.ID_pianta.values}: {plant_name.values}'
+        plant_title = plant_name.values
         document.add_heading(plant_title, 0)
         p = document.add_paragraph('')
         p.add_run('\n')
@@ -160,7 +161,9 @@ def make_plant_card():
         p.add_run(table_temp['sin_scientifici_url'].any())
         p.add_run('\n\n')
 
+        ###########################
         # INFO DA TABELLA 'ISO'
+        ###########################
 
         tab = ISO
         table_temp = tab[tab.ID_pianta == id]
@@ -179,7 +182,9 @@ def make_plant_card():
             p.add_run(table_temp['link_iso'].any())
             p.add_run('\n\n')
 
+        ###########################
         # INFO DA TABELLA 'EMA'
+        ###########################
 
         tab = EMA_HMPC
         table_temp = tab[tab.ID_pianta == id]
@@ -201,16 +206,18 @@ def make_plant_card():
             p.add_run('\n')
             p.add_run(table_temp['titolo_monografia'].any())
             p.add_run(' (')
-            #p.add_run(table_temp['anno_edizione'].any()) # todo fix
+            p.add_run(str(table_temp['anno_edizione'].values[0].astype(int)))
             p.add_run(')\n')
             p.add_run(table_temp['link_monografia'].any())
 
-
-        # INFO DA TABELLE ESCOP, Ph_Eur, FUI, WHO_OMS, KOME, IARC
+        ###########################
+        # INFO DA TABELLE ESCOP,
+        # Ph_Eur, FUI, WHO_OMS,
+        # KOME, IARC
+        ###########################
         tab_list = [ESCOP, Ph_Eur, FUI, WHO_OMS, KOME, IARC]
         tab_names = ['ESCOP', 'Eur Ph', 'FUI', 'WHO', 'KOME', 'IARC']
         p.add_run('\n\nRICERCA MONOGRAFIE (FARMACOPEE, KOMMISSIONE E, WHO, ESCOP, IARC, HEALTH CANADA MONOGRAPH):').bold = True
-        p.add_run('\n')
 
         for tab in range(len(tab_list)):
             table_temp = tab_list[tab][tab_list[tab].ID_pianta == id]
@@ -220,7 +227,7 @@ def make_plant_card():
                     p.add_run('\n')
                     p.add_run(tab_names[tab])
                     p.add_run(' (')
-                    # p.add_run(table_temp['anno_edizione'].any()) # todo fix
+                    p.add_run(str(table_temp['anno_edizione'].values[0].astype(int)))
                     p.add_run(') ')
                     p.add_run(table_temp['note'].any())
                     p.add_run(' ')
@@ -229,20 +236,22 @@ def make_plant_card():
                 if 'titolo_inglese_monog' in table_temp.columns:
                     p.add_run(', ')
                     p.add_run(table_temp['titolo_inglese_monog'].any())
-                    p.add_run(', ')
 
                 if 'pharmaceutical_preparation' in table_temp.columns:
-                    p.add_run(table_temp['pharmaceutical_preparation'].any())
                     p.add_run(', ')
+                    p.add_run(table_temp['pharmaceutical_preparation'].any())
 
                 if 'sostanza_attiva' in table_temp.columns:
+                    p.add_run(', ')
                     p.add_run(table_temp['sostanza_attiva'].any())
                     p.add_run(', ')
                     p.add_run(table_temp['active_substance'].any())
 
-            p.add_run('\n\n')
+                p.add_run('\n')
 
+        ###########################
         # INFO DA TABELLA 'EFSA_2'
+        ###########################
 
         tab = EFSA_2
         table_temp = tab[tab.ID_pianta == id]
@@ -252,17 +261,19 @@ def make_plant_card():
             p.add_run('\n')
             p.add_run(table_temp['titolo_articolo'].any())
             p.add_run('\n EFSA journal (')
-            # p.add_run(table_temp['anno_edizione'].any()) # todo fix
+            p.add_run(str(table_temp['anno_pubblicazione'].values[0].astype(int)))
             p.add_run('), ')
-            p.add_run(table_temp['note'].any())
-            p.add_run(', ')
+            if table_temp['note'].any():
+                p.add_run(table_temp['note'].any())
+                p.add_run(', ')
             p.add_run(table_temp['tipo_pubblicazione'].any())
             p.add_run('\n')
             p.add_run(table_temp['link_articolo'].any())
             p.add_run('\n\n')
 
-
+        ###########################
         # INFO DA TABELLA 'EFSA'
+        ###########################
 
         tab = EFSA
         table_temp = tab[tab.ID_pianta == id]
@@ -279,17 +290,21 @@ def make_plant_card():
             p.add_run(table_temp['effetti'].any()).bold = True
             p.add_run('\n')
 
-            if table_temp['effetti'].any():
+            if table_temp['limiti_massimi'].any():
                 p.add_run('Composizione limite / Concern composition: ').bold = True
                 p.add_run(table_temp['limiti_massimi'].any()).bold = True
                 p.add_run('\n')
-
-            p.add_run(table_temp['nome_compendium'].any())
-            p.add_run(', ')
-            p.add_run(table_temp['compendium_link'].any())
+            if table_temp['nome_compendium'].any():
+                p.add_run(table_temp['nome_compendium'].any())
+            if table_temp['compendium_link'].any():
+                p.add_run(', ')
+                p.add_run(table_temp['compendium_link'].any())
             p.add_run('\n\n')
 
-        # INFO DA TABELLA 'min_sal_ita'
+        ###########################
+        # INFO DA TABELLA
+        # 'min_sal_ita'
+        ###########################
 
         tab = min_sal_ita
         table_temp = tab[tab.ID_pianta == id]
@@ -311,8 +326,178 @@ def make_plant_card():
             p.add_run('\n')
             p.add_run(table_temp['link_decreto'].any())
 
+        ###########################
+        # INFO DA TABELLA
+        # 'principi_attivi_markers'
+        ###########################
 
-        # salva ed esporta il documento word
+        tab = principi_attivi_markers
+        table_temp = tab[tab.ID_pianta == id]
+
+        if table_temp.empty == False:
+            p.add_run(
+                'RESEARCH DATA ACTIVE PRINCIPLES / MARKERS:DATO RICERCA PRINCIPI ATTIVI/MARKERS:').bold = True
+            p.add_run('\n')
+            p.add_run(table_temp['principio_attivo'].any()).bold = True
+            p.add_run('\n')
+            p.add_run(table_temp['autore'].any())
+            p.add_run(', ')
+            p.add_run(table_temp['titolo_articolo'].any()).bold = True
+            p.add_run(', ')
+            p.add_run(table_temp['rivista'].any())
+            p.add_run(', ')
+            p.add_run(str(table_temp['anno_pubblicazione'].values[0].astype(int)))
+            p.add_run('\n')
+            p.add_run(table_temp['link_articolo'].any())
+            p.add_run('\n')
+
+        ###########################
+        # INFO DA TABELLA
+        # 'procedure_controllo_qualita'
+        ###########################
+
+        tab = procedure_controllo_qualita
+        table_temp = tab[tab.ID_pianta == id]
+
+        if table_temp.empty == False:
+            p.add_run(
+                'RESEARCH DATA/ OFFICIAL PROCEDURES OF QUALITY CONTROL/ DATO RICERCA/ PROCEDURE UFFICIALI DEL CONTROLLO QUALITA’:').bold = True
+            p.add_run('\n')
+            p.add_run(table_temp['nome_botanico'].any()).bold = True
+            p.add_run(', ')
+            p.add_run(table_temp['estratto'].any()).bold = True
+            p.add_run(', ')
+            p.add_run(table_temp['classi_chimiche'].any()).bold = True
+            p.add_run('\n')
+            p.add_run(table_temp['autore'].any())
+            p.add_run(', ')
+            p.add_run(table_temp['titolo_articolo'].any()).bold = True
+            p.add_run(', ')
+            p.add_run(table_temp['rivista'].any())
+            p.add_run(', ')
+            p.add_run(str(table_temp['anno_pubblicazione'].values[0].astype(int)))
+            p.add_run('\n')
+            p.add_run(table_temp['link_articolo'].any())
+            p.add_run('\n')
+
+        # + Eur Ph , FUI
+        tab_list = [Ph_Eur, FUI]
+        tab_names = ['Eur Ph', 'FUI']
+        for tab in range(len(tab_list)):
+            table_temp = tab_list[tab][tab_list[tab].ID_pianta == id]
+            if table_temp.empty == False:
+
+                if 'titolo_latino_monogr' in table_temp.columns:
+                    p.add_run('\n')
+                    p.add_run(tab_names[tab])
+                    p.add_run(' (')
+                    p.add_run(str(table_temp['anno_edizione'].values[0].astype(int)))
+                    p.add_run(') ')
+                    p.add_run(table_temp['note'].any())
+                    p.add_run(' ')
+                    p.add_run(table_temp['titolo_latino_monogr'].any())
+
+                if 'titolo_inglese_monog' in table_temp.columns:
+                    p.add_run(', ')
+                    p.add_run(table_temp['titolo_inglese_monog'].any())
+
+                if 'pharmaceutical_preparation' in table_temp.columns:
+                    p.add_run(', ')
+                    p.add_run(table_temp['pharmaceutical_preparation'].any())
+
+                if 'sostanza_attiva' in table_temp.columns:
+                    p.add_run(', ')
+                    p.add_run(table_temp['sostanza_attiva'].any())
+                    p.add_run(', ')
+                    p.add_run(table_temp['active_substance'].any())
+
+                p.add_run('\n')
+
+        ###########################
+        # INFO DA TABELLA
+        # 'dato_bio_farmacologico'
+        ###########################
+
+        tab = dato_bio_farmacologico
+        table_temp = tab[tab.ID_pianta == id]
+
+        if table_temp.empty == False:
+            p.add_run(
+                'RESEARCH BIO/PHARMACOLOGICAL DATA:DATO RICERCA BIO/FARMACOLOGICO:').bold = True
+            p.add_run('\n')
+            p.add_run(table_temp['attivita_bio_farmacol'].any()).bold = True
+            p.add_run('\n')
+            p.add_run(table_temp['autore'].any())
+            p.add_run(', ')
+            p.add_run(table_temp['titolo_articolo'].any()).bold = True
+            p.add_run(', ')
+            p.add_run(table_temp['rivista'].any())
+            p.add_run(', ')
+            p.add_run(str(table_temp['anno_pubblicazione'].values[0].astype(int)))
+            p.add_run('\n')
+            p.add_run(table_temp['link_articolo'].any())
+            p.add_run('\n')
+
+        ###########################
+        # INFO DA TABELLA
+        # 'box_tossicologico'
+        ###########################
+
+        tab = box_tossicologico
+        table_temp = tab[tab.ID_pianta == id]
+
+        if table_temp.empty == False:
+            p.add_run(
+                'TOXICOLOGICAL DATA/ DATO TOSSICOLOGICO (MONOGRAFIE IARC, LINK E REFERENZE RICERCA):').bold = True
+            p.add_run('\n')
+            p.add_run(table_temp['effetti'].any()).bold = True
+            p.add_run('\n')
+            p.add_run(table_temp['autore'].any())
+            p.add_run(', ')
+            p.add_run(table_temp['titolo_articolo'].any()).bold = True
+            p.add_run(', ')
+            p.add_run(table_temp['rivista'].any())
+            p.add_run(', ')
+            p.add_run(str(table_temp['anno_pubblicazione'].values[0].astype(int)))
+            p.add_run('\n')
+            p.add_run(table_temp['link_articolo'].any())
+            p.add_run('\n')
+
+        tab = IARC
+        table_temp = tab[tab.ID_pianta == id]
+
+        if table_temp.empty == False:
+
+            if 'titolo_latino_monogr' in table_temp.columns:
+                p.add_run('IARC \n').bold = True
+                p.add_run(tab_names[tab])
+                p.add_run(' (')
+                p.add_run(str(table_temp['anno_edizione'].values[0].astype(int)))
+                p.add_run(') ')
+                p.add_run(table_temp['note'].any())
+                p.add_run(' ')
+                p.add_run(table_temp['titolo_latino_monogr'].any())
+
+            if 'titolo_inglese_monog' in table_temp.columns:
+                p.add_run(', ')
+                p.add_run(table_temp['titolo_inglese_monog'].any())
+
+            if 'pharmaceutical_preparation' in table_temp.columns:
+                p.add_run(', ')
+                p.add_run(table_temp['pharmaceutical_preparation'].any())
+
+            if 'sostanza_attiva' in table_temp.columns:
+                p.add_run(', ')
+                p.add_run(table_temp['sostanza_attiva'].any())
+                p.add_run(', ')
+                p.add_run(table_temp['active_substance'].any())
+
+            p.add_run('\n')
+
+        ###########################
+        # salva ed esporta il
+        # documento word
+        ###########################
         document.save(f'../export/doc/{id}.docx') # word
         #convert("doc/", "pdf/") # converte tutte le schede in pdf
 
