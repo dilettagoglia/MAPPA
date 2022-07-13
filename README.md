@@ -65,7 +65,7 @@ python main.py
 **Postgraduate Student in MSc in Artificial Intelligence** <br/>
 **Computer Science department, University of Pisa, Italy** <br/>
 [d.goglia@studenti.unipi.it](mailto:d.goglia@studenti.unipi.it) <br/>
-[dilettagoglia.netlify.app](http://www.dilettagoglia.netlify.app) 
+[dilettagoglia.netlify.app](https://www.dilettagoglia.netlify.app) 
 
 _Candidata vincitrice dell'incarico di collaborazione a seguito del [bando dedicato 
 all'attività di supporto all’interno del progetto MAPPA](https://www.farm.unipi.it/wp-content/uploads/2022/04/PD-253-prot-1986-del-12-04-2022-Bando-PSd-Bertoli_150-ore.pdf) per lo sviluppo di una banca 
@@ -74,5 +74,5 @@ a base di piante officinali mediante catalogazione di dati etno-botanico-farmace
 
 
 ## Project info
-**Coordinator**: Alessandra Bertoli, associated professor at Pharmacy Department, University of Pisa
-via Bonanno 33 56126 PISA (Italy), [alessandra.bertoli@unipi.it](alessandra.bertoli@unipi.it)
+**Coordinator**: Alessandra Bertoli, associated professor at Pharmacy Department, University of Pisa,
+via Bonanno 33 56126 PISA (Italy), [alessandra.bertoli@unipi.it](mailto:alessandra.bertoli@unipi.it)
