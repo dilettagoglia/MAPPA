@@ -17,6 +17,8 @@ transform it in structured cards for each plant in the database, both in Word an
 ## Description
 The database in .xlsx format and the code contained in this repo have been developed for the 
 MAPPA project (Medicinal and Aromatic Plant Procedures for Authentication) of Pharmacy Department, University of Pisa.
+At this stage, the `export` directory only contain a sample of the results obtained by running the code, since the content
+of the database is not publicly available and accessible. The .docx and .pdf files' names correspond to the plant ID in the database.
 
 ## Directory structure (main elements)
 ```
