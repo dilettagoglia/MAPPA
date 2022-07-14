@@ -10,7 +10,6 @@
 _This repository contains the code that retrieves the content of the MAPPA database and
 transform it in structured cards for each plant in the database, both in Word and in PDF format._
 
-<a href="https://github.com/dilettagoglia/MAPPA/blob/main/LICENSE"><img src="https://img.shields.io/github/license/dilettagoglia/MAPPA" alt="License" /></a>
 <a href="https://github.com/dilettagoglia/MAPPA/stargazers"><img src="https://img.shields.io/github/stars/dilettagoglia/MAPPA" alt="GitHub stars" /></a>
 <a href="https://github.com/dilettagoglia/MAPPA/network/members"><img alt="GitHub forks" src="https://img.shields.io/github/forks/dilettagoglia/MAPPA" /></a>
 
@@ -74,6 +73,9 @@ all'attività di supporto all’interno del progetto MAPPA](https://www.farm.uni
 dati di settore on-line dedicata all’inquadramento di materie prime e derivati 
 a base di piante officinali mediante catalogazione di dati etno-botanico-farmaceutici selezionati_
 
+<p align="left">
+    <img align="center" src='img/regione_toscana.png' width="500px">
+</p>
 
 ## Project info & team
 #### Coordinator 
