@@ -1,0 +1,7 @@
+docx==0.2.4
+docx2pdf==0.1.8
+numpy==1.23.0
+pandas==1.2.0
+python_docx==0.8.11
+pywin32==301
+varname==0.8.3

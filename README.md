@@ -60,11 +60,17 @@ Execute [main](src/main.py)
 cd src/
 python main.py
 ```
+## Project info & team
 
-## Corresponding author
+#### Coordinator 
+**Alessandra Bertoli**, <br/>
+Associated professor at [Pharmacy Department](https://www.farm.unipi.it/), University of Pisa,<br/>
+via Bonanno 33 56126 PISA (Italy),<br/> [alessandra.bertoli@unipi.it](mailto:alessandra.bertoli@unipi.it)
+
+#### Corresponding author
 **Dr. Diletta Goglia** <a href="https://orcid.org/0000-0002-2622-7495"><img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a> <br/>
-**Postgraduate Student in MSc in Artificial Intelligence** <br/>
-**Computer Science department, University of Pisa, Italy** <br/>
+Postgraduate Student in MSc in Artificial Intelligence<br/>
+Computer Science department, University of Pisa, Italy <br/>
 [d.goglia@studenti.unipi.it](mailto:d.goglia@studenti.unipi.it) <br/>
 [dilettagoglia.netlify.app](https://www.dilettagoglia.netlify.app) 
 
@@ -78,13 +84,6 @@ a base di piante officinali mediante catalogazione di dati etno-botanico-farmace
     <img align="center" src='img/regione_toscana.png' width="500px">
 </p>
 
-
-
-## Project info & team
-#### Coordinator 
-Alessandra Bertoli, <br/>
-Associated professor at [Pharmacy Department](https://www.farm.unipi.it/), University of Pisa,<br/>
-via Bonanno 33 56126 PISA (Italy), [alessandra.bertoli@unipi.it](mailto:alessandra.bertoli@unipi.it)
 
 #### Data gathering
 Alice Bovi Campeggi, Elisa De Santis, Elisa Solari (Pharmacy Department), Alice Downes (Agricultural Science Department)
