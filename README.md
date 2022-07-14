@@ -71,11 +71,14 @@ python main.py
 _Candidata vincitrice dell'incarico di collaborazione a seguito del [bando dedicato 
 all'attività di supporto all’interno del progetto MAPPA](https://www.farm.unipi.it/wp-content/uploads/2022/04/PD-253-prot-1986-del-12-04-2022-Bando-PSd-Bertoli_150-ore.pdf) per lo sviluppo di una banca 
 dati di settore on-line dedicata all’inquadramento di materie prime e derivati 
-a base di piante officinali mediante catalogazione di dati etno-botanico-farmaceutici selezionati_
+a base di piante officinali mediante catalogazione di dati etno-botanico-farmaceutici selezionati._
 
+**_Progetto Superforma Regione Toscana._**
 <p align="left">
     <img align="center" src='img/regione_toscana.png' width="500px">
 </p>
+
+
 
 ## Project info & team
 #### Coordinator 
