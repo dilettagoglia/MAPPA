@@ -9,73 +9,24 @@
 We’ll need three libraries for this project. We use pandas to read data from an Excel file,
 python-docx for automating .docx (e.g. MS Word, Google docs, etc) file
 pywin32 for interacting with Windows APIs. '''
+
 # pip install pandas python-docx pywin32
 # pip install python-docx
 
 
-import docx, docx2pdf
-from docx2pdf import convert
 from docx import Document
-from docx.shared import Inches
-import pandas as pd
-import numpy as np
-import win32com.client
 from tables import *
 from varname import nameof
-
+from utilities import docx_to_pdf
+import os
+import win32com.client
+from io import BytesIO
+import requests
+from docx import Document
+from docx.shared import Inches
 
 ''' The following function takes as parameter the list of column names of each single table'''
 
-'''
-def make_plant_card(col_list):
-    document = Document() # to create a .docx file
-    #document.add_picture('brand_logo.png', width=Inches(1))
-    document.add_heading('Invoice', 0)
-    p = document.add_paragraph('Dear ')
-    p.add_run(name).bold = True
-    p.add_run(',')
-
-    p2 = document.add_paragraph('Please find attached invoice for your recent purchase of ')
-    p2.add_run(str(unit)).bold = True
-    p2.add_run(' units of ')
-    p2.add_run(product).bold = True
-    p2.add_run('.')
-
-    [document.add_paragraph('') for _ in range(2)]
-
-    table = document.add_table(rows=1, cols=4)
-    hdr_cells = table.rows[0].cells
-    hdr_cells[0].text = 'Product Name'
-    hdr_cells[1].text = 'Units'
-    hdr_cells[2].text = 'Unit Price'
-    hdr_cells[3].text = 'Total Price'
-    for i in range(4):
-        hdr_cells[i].paragraphs[0].runs[0].font.bold = True
-
-    row_cells = table.add_row().cells
-    row_cells[0].text = product
-    row_cells[1].text = f'{unit:,.2f}'
-    row_cells[2].text = f'{price:,.2f}'
-    row_cells[3].text = f'{unit * price:,.2f}'
-
-    [document.add_paragraph('') for _ in range(10)]
-
-    document.add_paragraph('We appreciate your business and and please come again!')
-    document.add_paragraph('Sincerely')
-    document.add_paragraph('Jay')
-
-    document.save(f'{name}.docx')
-
-
-def docx_to_pdf(src, dst):
-    word = win32com.client.Dispatch("Word.Application")
-    wdFormatPDF = 17
-    doc = word.Documents.Open(src)
-    doc.SaveAs(dst, FileFormat=wdFormatPDF)
-    doc.Close()
-    word.Quit()
-
-'''
 for i in range(len(sheet)):
     globals()[f'{sheet[i]}'] = extracted_tables[i]
 
@@ -103,13 +54,18 @@ tables_list = [box_tossicologico,
       IARC,
       HCM]
 
-print(nomenclatura_botanica.columns)
+# print(nomenclatura_botanica.columns)
+print('TABELLE ESTRATTE:\n', sheet)
 
 def make_plant_card():
     '''
     Automate word Document (.docx) with Python-docx and pywin32.
     :return:
     '''
+
+    proc = 'Process 2'
+    print(f'{str(proc)}: creating cards...')
+
     table = nomenclatura_botanica
     id_list = table.ID_pianta.unique()
 
@@ -215,6 +171,7 @@ def make_plant_card():
         # Ph_Eur, FUI, WHO_OMS,
         # KOME, IARC
         ###########################
+
         tab_list = [ESCOP, Ph_Eur, FUI, WHO_OMS, KOME, IARC]
         tab_names = ['ESCOP', 'Eur Ph', 'FUI', 'WHO', 'KOME', 'IARC']
         p.add_run('\n\nRICERCA MONOGRAFIE (FARMACOPEE, KOMMISSIONE E, WHO, ESCOP, IARC, HEALTH CANADA MONOGRAPH):').bold = True
@@ -247,7 +204,8 @@ def make_plant_card():
                     p.add_run(', ')
                     p.add_run(table_temp['active_substance'].any())
 
-                p.add_run('\n')
+            p.add_run('\n')
+        p.add_run('\n')
 
         ###########################
         # INFO DA TABELLA 'EFSA_2'
@@ -296,8 +254,8 @@ def make_plant_card():
                 p.add_run('\n')
             if table_temp['nome_compendium'].any():
                 p.add_run(table_temp['nome_compendium'].any())
+                p.add_run('\n')
             if table_temp['compendium_link'].any():
-                p.add_run(', ')
                 p.add_run(table_temp['compendium_link'].any())
             p.add_run('\n\n')
 
@@ -325,6 +283,7 @@ def make_plant_card():
             p.add_run(table_temp['referenze_istituzionali'].any())
             p.add_run('\n')
             p.add_run(table_temp['link_decreto'].any())
+            p.add_run('\n\n')
 
         ###########################
         # INFO DA TABELLA
@@ -342,14 +301,14 @@ def make_plant_card():
             p.add_run('\n')
             p.add_run(table_temp['autore'].any())
             p.add_run(', ')
-            p.add_run(table_temp['titolo_articolo'].any()).bold = True
+            p.add_run(table_temp['titolo_articolo'].any())
             p.add_run(', ')
             p.add_run(table_temp['rivista'].any())
             p.add_run(', ')
             p.add_run(str(table_temp['anno_pubblicazione'].values[0].astype(int)))
             p.add_run('\n')
             p.add_run(table_temp['link_articolo'].any())
-            p.add_run('\n')
+            p.add_run('\n\n')
 
         ###########################
         # INFO DA TABELLA
@@ -371,7 +330,7 @@ def make_plant_card():
             p.add_run('\n')
             p.add_run(table_temp['autore'].any())
             p.add_run(', ')
-            p.add_run(table_temp['titolo_articolo'].any()).bold = True
+            p.add_run(table_temp['titolo_articolo'].any())
             p.add_run(', ')
             p.add_run(table_temp['rivista'].any())
             p.add_run(', ')
@@ -411,7 +370,7 @@ def make_plant_card():
                     p.add_run(', ')
                     p.add_run(table_temp['active_substance'].any())
 
-                p.add_run('\n')
+                p.add_run('\n\n')
 
         ###########################
         # INFO DA TABELLA
@@ -429,14 +388,14 @@ def make_plant_card():
             p.add_run('\n')
             p.add_run(table_temp['autore'].any())
             p.add_run(', ')
-            p.add_run(table_temp['titolo_articolo'].any()).bold = True
+            p.add_run(table_temp['titolo_articolo'].any())
             p.add_run(', ')
             p.add_run(table_temp['rivista'].any())
             p.add_run(', ')
             p.add_run(str(table_temp['anno_pubblicazione'].values[0].astype(int)))
             p.add_run('\n')
             p.add_run(table_temp['link_articolo'].any())
-            p.add_run('\n')
+            p.add_run('\n\n')
 
         ###########################
         # INFO DA TABELLA
@@ -454,14 +413,14 @@ def make_plant_card():
             p.add_run('\n')
             p.add_run(table_temp['autore'].any())
             p.add_run(', ')
-            p.add_run(table_temp['titolo_articolo'].any()).bold = True
+            p.add_run(table_temp['titolo_articolo'].any())
             p.add_run(', ')
             p.add_run(table_temp['rivista'].any())
             p.add_run(', ')
             p.add_run(str(table_temp['anno_pubblicazione'].values[0].astype(int)))
             p.add_run('\n')
             p.add_run(table_temp['link_articolo'].any())
-            p.add_run('\n')
+            p.add_run('\n\n')
 
         tab = IARC
         table_temp = tab[tab.ID_pianta == id]
@@ -492,13 +451,166 @@ def make_plant_card():
                 p.add_run(', ')
                 p.add_run(table_temp['active_substance'].any())
 
+            p.add_run('\n\n')
+
+        ###########################
+        # INFO DA TABELLA
+        # 'dato_etnobotanico'
+        ###########################
+
+        tab = dato_etnobotanico
+        table_temp = tab[tab.ID_pianta == id]
+
+        if table_temp.empty == False:
+            p.add_run(
+                'ETHNOBOTANICAL DATA/ DATO ETNOBOTANICO:').bold = True
             p.add_run('\n')
+            p.add_run(table_temp['parti_della_pianta'].any()).bold = True
+            p.add_run('\n')
+            p.add_run(table_temp['preparazione'].any())
+            p.add_run('\n')
+            p.add_run(table_temp['usi_tradizionali'].any()).bold = True
+            p.add_run('\n')
+            p.add_run(table_temp['autore'].any())
+            p.add_run(', ')
+            p.add_run(table_temp['titolo_articolo'].any())
+            p.add_run(', ')
+            p.add_run(table_temp['rivista'].any())
+            p.add_run(', ')
+            p.add_run(str(table_temp['anno_pubblicazione'].values[0].astype(int)))
+            p.add_run('\n')
+            p.add_run(table_temp['link_articolo'].any())
+            p.add_run('\n\n')
+
+        ###########################
+        # INFO DA TABELLA
+        # 'dato_EU_commission'
+        ###########################
+
+        tab = dato_EU_commission
+        table_temp = tab[tab.ID_pianta == id]
+
+        if table_temp.empty == False:
+            p.add_run(
+                'DATO EU COMMISSION (FOOD SAFETY/ NOVEL FOOD):').bold = True
+            p.add_run('\n')
+            p.add_run(table_temp['nome_botanico'].any()).bold = True
+            p.add_run('\n')
+            p.add_run(table_temp['autore'].any())
+            p.add_run(', ')
+            p.add_run(table_temp['titolo_articolo'].any())
+            p.add_run(', ')
+            p.add_run(table_temp['rivista'].any())
+            p.add_run(', ')
+            p.add_run(str(table_temp['anno_pubblicazione'].values[0].astype(int)))
+            p.add_run('\n')
+            p.add_run(table_temp['link_articolo'].any())
+            p.add_run('\n\n')
+
+        ###########################
+        # INFO DA TABELLA
+        # 'dati_mercato'
+        ###########################
+
+        tab = dati_mercato
+        table_temp = tab[tab.ID_pianta == id]
+
+        if table_temp.empty == False:
+            p.add_run(
+                'MARKET DATA / DATI MERCATO:').bold = True
+            p.add_run('\n')
+            p.add_run(table_temp['autore'].any())
+            p.add_run(', ')
+            p.add_run(table_temp['titolo_articolo'].any())
+            p.add_run(', ')
+            p.add_run(table_temp['rivista'].any())
+            p.add_run(', ')
+            p.add_run(str(table_temp['anno_pubblicazione'].values[0].astype(int)))
+            p.add_run('\n')
+            p.add_run(table_temp['link_articolo'].any())
+            p.add_run('\n\n')
+
+        ###########################
+        # INFO DA TABELLA
+        # 'campione_riferimento'
+        ###########################
+
+        tab = campione_riferimento
+        table_temp = tab[tab.ID_pianta == id]
+
+        if table_temp.empty == False:
+            p.add_run(
+                'ORTO E MUSEO BOTANICO DI PISA\nHERBARIUM SPECIMEN/CAMPIONE D’ERBARIO:\n').bold = True
+            p.add_run('\n')
+            # todo
+
+        '''
+            ###########################
+            # FOTO ORTO BOTANICO
+            ###########################
+
+            if table_temp['link_foto_tavola_bot'].any():
+                p.add_run('LIVING PLANT SPECIMEN/CAMPIONE DI PIANTA IN VIVO:\n').bold = True
+                p.add_run(table_temp['link_foto_tavola_bot'].any())
+                p.add_run('\n')
+
+            if table_temp['didascalia_foto_living_orto'].any():
+                p.add_run(table_temp['didascalia_foto_living_orto'].any())
+                p.add_run(
+                    '\nhttps://uplantdiscover.sma.unipi.it/Home/Details?id=0bf814eb719b417f9d7925a80163717e\n').bold = True
+
+            ###########################
+            # FOTO PROGETTO MAPPA
+            ###########################
+            count = 1
+
+            if table_temp['link_foto_mappa'].any():
+                p.add_run('\nPLANT PARTS AND HERBAL DRUGS/ PARTI DI PIANTA E DROGA:\n').bold = True
+                p.add_run('\n')
+
+
+                for link_ in table_temp['link_foto_mappa']:
+                    response = requests.get(link_)  # no need to add stream=True
+                    # Access the response body as bytes
+                    #   then convert it to in-memory binary stream using `BytesIO`
+                    binary_img = BytesIO(response.content)
+                    # `add_picture` supports image path or stream, we use stream
+                    document.add_picture(binary_img, width=Inches(2))
+                    p.add_run(f'Fig.{str(count)}')
+                    count+=1
+
+
+            if table_temp['didascalia_mappa'].any():
+
+                for descr in table_temp['didascalia_mappa']:
+                    p.add_run(f'Fig.{str(count)}')
+                    p.add_run(descr)
+                    p.add_run('\nspecimen linked to the MAPPA project PSD_2021/22_UNIPI\n').bold = True
+                    count+=1
+        '''
 
         ###########################
         # salva ed esporta il
-        # documento word
+        # documento
         ###########################
-        document.save(f'../export/doc/{id}.docx') # word
-        #convert("doc/", "pdf/") # converte tutte le schede in pdf
+
+        # salva la scheda in word
+        print(f'Exporting and saving card number {id} as Word document')
+        document.save(f'../export/doc/{id}.docx')
+
+        # converte e salva tutte le schede in pdf
+
+        script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
+
+        src_rel_path = f'../export/doc/{id}.docx'
+        src_abs_file_path = os.path.join(script_dir, src_rel_path)
+
+        dst_rel_path = f'../export/pdf/{id}.pdf'
+        dst_abs_file_path = os.path.join(script_dir, dst_rel_path)
+
+        print(f'Exporting and saving card number {id} as PDF document')
+        docx_to_pdf(src_abs_file_path, dst_abs_file_path)
+
+    print(f'{str(proc)} successfully terminated.')
 
 make_plant_card()
